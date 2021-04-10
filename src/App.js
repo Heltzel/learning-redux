@@ -13,46 +13,29 @@ import cartItems from './cart-items'
 // action - return updated state
 
 import { createStore } from 'redux'
+import reducer from './reducer'
+
 // dispatch method -  send actions to the store
 // actions (objects) - must have type proprty -  what kind of action
 // don't mutate the state - redux build on immutability (copy)
 
 //initial store
 const intialStore = {
-  count: 0,
-}
-
-// reducer
-function reducer(state, action) {
-  console.log(state, action)
-  if (action.type === 'DECREASE') {
-    return { count: state.count - 1 }
-  }
-  if (action.type === 'INCREASE') {
-    return { count: state.count + 1 }
-  }
-  if (action.type === 'RESET') {
-    return { count: 0 }
-  }
-  return state
+  cart: cartItems,
+  total: 0,
+  amount: 0,
 }
 
 // store.getState() -
+// reducer here is imported at the top
 const store = createStore(reducer, intialStore)
-store.dispatch({ type: 'DECREASE' })
-store.dispatch({ type: 'INCREASE' })
-store.dispatch({ type: 'INCREASE' })
-store.dispatch({ type: 'RESET' })
-console.log(store.getState())
-
-//------------------------------------------
 
 function App() {
   // cart setup
 
   return (
     <main>
-      <Navbar cart={store.getState()} />
+      <Navbar />
       <CartContainer cart={cartItems} />
     </main>
   )
