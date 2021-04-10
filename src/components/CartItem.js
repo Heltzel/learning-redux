@@ -1,6 +1,16 @@
-import React from "react";
+import React from 'react'
+import { connect } from 'react-redux'
+import { REMOVE, INCREASE, DECREASE } from '../actions'
 
-const CartItem = ({ img, title, price, amount }) => {
+const CartItem = ({
+  img,
+  title,
+  price,
+  amount,
+  remove,
+  increase,
+  decrease,
+}) => {
   return (
     <div className="cart-item">
       <img src={img} alt={title} />
@@ -8,7 +18,9 @@ const CartItem = ({ img, title, price, amount }) => {
         <h4>{title}</h4>
         <h4 className="item-price">${price}</h4>
         {/* remove button */}
-        <button className="remove-btn">remove</button>
+        <button className="remove-btn" onClick={() => remove()}>
+          remove
+        </button>
       </div>
       <div>
         {/* increase amount */}
@@ -27,7 +39,16 @@ const CartItem = ({ img, title, price, amount }) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CartItem;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { id } = ownProps
+  return {
+    remove: () => dispatch({ type: REMOVE, payload: { id: id } }),
+    increase: () => dispatch({ type: INCREASE }),
+    decrease: () => dispatch({ type: DECREASE }),
+  }
+}
+// null is passed-in instead of mappStateToProps (allways the first argument)
+export default connect(null, mapDispatchToProps)(CartItem)

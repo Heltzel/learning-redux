@@ -1,18 +1,22 @@
 import { INCREASE, DECREASE, CLEAR_CART, REMOVE } from './actions'
 
 function reducer(state, action) {
+  const { payload } = action
   switch (action.type) {
     case CLEAR_CART:
       return { ...state, cart: [] }
     case DECREASE:
       console.log('You decreased the amount')
-      break
+      return state
     case INCREASE:
       console.log('You increased the amount')
-      break
+      return state
     case REMOVE:
-      console.log('You removed the item')
-      break
+      console.log(payload.id)
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== payload.id),
+      }
     default:
       return state
   }
