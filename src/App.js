@@ -4,26 +4,17 @@ import Navbar from './components/Navbar'
 import CartContainer from './components/CartContainer'
 // items
 import cartItems from './cart-items'
-// redux stuff
-// store - stores data, think of state
-// reducer - function that used to update store
-// reducer -  takes 2 arguments: state, action
-// state - old state/ state  before update
-// action - what happened/ what update
-// action - return updated state
 
 import { createStore } from 'redux'
 import reducer from './reducer'
-
-// dispatch method -  send actions to the store
-// actions (objects) - must have type proprty -  what kind of action
-// don't mutate the state - redux build on immutability (copy)
+// react-redux - Provider wraps app, connect - used in components
+import { Provider } from 'react-redux'
 
 //initial store
 const intialStore = {
   cart: cartItems,
-  total: 0,
-  amount: 0,
+  total: 99.99,
+  amount: 5,
 }
 
 // store.getState() -
@@ -31,13 +22,11 @@ const intialStore = {
 const store = createStore(reducer, intialStore)
 
 function App() {
-  // cart setup
-
   return (
-    <main>
+    <Provider store={store}>
       <Navbar />
-      <CartContainer cart={cartItems} />
-    </main>
+      <CartContainer />
+    </Provider>
   )
 }
 
